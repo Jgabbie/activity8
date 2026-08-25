@@ -28,7 +28,7 @@ L.Icon.Default.mergeOptions({
 })
 
 import { useReactTable, getCoreRowModel, flexRender } from '@tanstack/react-table'
-import { IconButton } from '@mui/material'
+
 
 function Registration() {
     const [firstname, setFirstname] = useState("")
@@ -64,9 +64,9 @@ function Registration() {
             id: "actions",
             header: "Action",
             cell: ({ row }) => (
-                <IconButton color='error' size='small' onClick={() => handleDelete(row.original.id)} title='Delete Student'>
+                <Button color='error' size='small' onClick={() => handleDelete(row.original.id)} title='Delete Student'>
                     <DeleteIcon />
-                </IconButton>
+                </Button>
             )
         }
     ]
