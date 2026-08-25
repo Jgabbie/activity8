@@ -328,9 +328,6 @@ function Registration() {
                         </table>
                     </div>
                 </div>
-
-
-
             </div>
         </div>
     )
