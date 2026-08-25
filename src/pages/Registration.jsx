@@ -235,7 +235,7 @@ function Registration() {
                             </Form.Group>
 
                             <Form.Group>
-                                <Form.Label>First Name</Form.Label>
+                                <Form.Label>Last Name</Form.Label>
                                 <Form.Control value={lastname} onChange={(e) => setLastname(e.target.value)} />
                             </Form.Group>
 
