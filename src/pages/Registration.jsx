@@ -1,20 +1,12 @@
 import { useState } from 'react'
 import "../App.css"
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
-import TextField from '@mui/material/TextField'
-import Select from '@mui/material/Select'
-import MenuItem from '@mui/material/MenuItem'
-import InputLabel from '@mui/material/InputLabel'
-import FormControl from '@mui/material/FormControl'
-import Button from '@mui/material/Button'
-import Alert from '@mui/material/Alert'
-import Typography from '@mui/material/Typography'
 
-import LocationOnIcon from '@mui/icons-material/LocationOn'
-import MapIcon from '@mui/icons-material/Map'
-import DeleteIcon from '@mui/icons-material/Delete'
-import PersonOffOutlinedIcon from '@mui/icons-material/PersonOffOutlined'
+import Card from 'react-bootstrap/Card'
+import Form from 'react-bootstrap/Form'
+import Alert from 'react-bootstrap/Alert'
+import Button from 'react-bootstrap/Button'
+
+import { GeoAltFill, MapFill, TrashFill, PersonXFill } from 'react-bootstrap-icons'
 
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import L from "leaflet"
@@ -64,8 +56,8 @@ function Registration() {
             id: "actions",
             header: "Action",
             cell: ({ row }) => (
-                <Button color='error' size='small' onClick={() => handleDelete(row.original.id)} title='Delete Student'>
-                    <DeleteIcon />
+                <Button variant='danger' size='small' onClick={() => handleDelete(row.original.id)} title='Delete Student'>
+                    <TrashFill size={18} />
                 </Button>
             )
         }
@@ -79,7 +71,7 @@ function Registration() {
     const handleAdd = async (e) => {
         e.preventDefault()
 
-        if (!firstname || !lastname || !email || !address) return setError("Fill in all the fields!")
+        if (!firstname || !lastname || !email || !address || !course) return setError("Fill in all the fields!")
 
         setLoading(true)
 
@@ -134,26 +126,26 @@ function Registration() {
 
             <nav className="flex items-center justify-between bg-white px-6 py-8 text-black shadow-md">
                 <div className='flex items-center gap-4'>
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600 text-white">
-                        <LocationOnIcon />
+                    <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-blue-600 text-white mb-3">
+                        <GeoAltFill size={24} />
                     </div>
 
                     <div className='flex flex-col'>
-                        <Typography variant='h4'>
+                        <h4 >
                             Student Location System
-                        </Typography>
+                        </h4>
 
-                        <Typography variant='caption'>
+                        <p>
                             Register students and view their location on the map
-                        </Typography>
+                        </p>
                     </div>
                 </div>
 
-                <Card variant='elevation' className='px-5 py-3 text-center'>
-                    <Typography variant='caption'>TOTAL STUDENTS</Typography>
-                    <Typography variant='h5'>
+                <Card className='px-5 py-3 text-center'>
+                    <p >TOTAL STUDENTS</p>
+                    <h5 >
                         {students.length}
-                    </Typography>
+                    </h5>
                 </Card>
 
             </nav>
@@ -163,57 +155,57 @@ function Registration() {
 
                     <div className="flex items-center justify-between bg-white px-6 py-4 text-black shadow-md">
                         <div className='flex items-center gap-3'>
-                            <div className='flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600 text-white'>
-                                <MapIcon />
+                            <div className='flex h-16 w-16 items-center justify-center rounded-xl bg-blue-600 text-white mb-3'>
+                                <MapFill size={24} />
                             </div>
                             <div className='flex flex-col'>
-                                <Typography variant='h4'>
+                                <h4 >
                                     Student Locations
-                                </Typography>
+                                </h4>
 
-                                <Typography variant='caption'>
+                                <p >
                                     Interactibe Student Location Map
-                                </Typography>
+                                </p>
                             </div>
                         </div>
 
 
                         <Card className='px-5 py-3 !bg-blue-600  text-center !text-white'>
-                            <Typography variant='caption'>TOTAL LOCATIONS</Typography>
-                            <Typography variant='h5'>
+                            <p >TOTAL LOCATIONS</p>
+                            <h5 >
                                 {students.length}
-                            </Typography>
+                            </h5>
                         </Card>
 
                     </div>
 
-                    <MapContainer center={[14.5995, 121.033]} zoom={13} style={{ height: "330px", width: "100%" }}>
+                    <MapContainer center={[14.5995, 121.033]} zoom={13} style={{ height: "500px", width: "100%" }}>
                         <TileLayer attribution="&copy; OpenStreetMap constributors" url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
                         {students.map((student) => (
                             <Marker key={student.id} position={[student.latitude, student.longitude]}>
                                 <Popup>
                                     <div>
-                                        <Typography variant='h5' className='font-bold text-base border-b pb-1 mb-1 text-blue-600'>
+                                        <h5 className='font-bold text-base border-b pb-1 mb-1 text-blue-600'>
                                             {student.firstname} {student.lastname}
-                                        </Typography>
-                                        <Typography className='m-0 text-sm'>
+                                        </h5>
+                                        <p className='m-0 text-sm'>
                                             <span className='font-semibold'>Course: </span> {student.course}
-                                        </Typography>
-                                        <Typography className='m-0 text-sm'>
+                                        </p>
+                                        <p className='m-0 text-sm'>
                                             <span className='font-semibold'>Email: </span> {student.email}
-                                        </Typography>
-                                        <Typography className='m-0 text-sm'>
+                                        </p>
+                                        <p className='m-0 text-sm'>
                                             <span className='font-semibold'>Address:</span> {student.address}
-                                        </Typography>
+                                        </p>
 
                                         <div className='flex flex-col gap-0.5'>
-                                            <Typography variant='caption' className='m-0 text-sm'>
+                                            <p className='m-0 text-sm'>
                                                 <span className='font-semibold'>Latitude:</span> {""} {student.latitude}
-                                            </Typography>
-                                            <Typography variant='caption' className='m-0 text-sm'>
+                                            </p>
+                                            <p className='m-0 text-sm'>
                                                 <span className='font-semibold'>Longitude:</span> {""} {student.longitude}
-                                            </Typography>
+                                            </p>
                                         </div>
 
                                     </div>
@@ -224,38 +216,56 @@ function Registration() {
                 </div>
 
                 <div >
-                    <Card variant='elevation'>
-                        <CardContent className="flex flex-col gap-4">
-                            <Typography variant='h5'>
-                                Student Registration
-                            </Typography>
-                            <Typography variant='caption'>
-                                Enter the student's information and address
-                            </Typography>
+                    <Card>
+                        <Card.Body className="flex flex-col gap-4">
 
-                            <TextField label="First Name" size='small' value={firstname} onChange={(e) => setFirstname(e.target.value)} />
-                            <TextField label="Last Name" size='small' value={lastname} onChange={(e) => setLastname(e.target.value)} />
-                            <FormControl size='small' fullWidth>
-                                <InputLabel>
-                                    Course
-                                </InputLabel>
-                                <Select label="Course" value={course} onChange={(e) => setCourse(e.target.value)}>
-                                    <MenuItem value="BSIT">BSIT</MenuItem>
-                                    <MenuItem value="BSCS">BSCS</MenuItem>
-                                    <MenuItem value="BSIS">BSIS</MenuItem>
-                                    <MenuItem value="BSEMC">BSEMC</MenuItem>
-                                    <MenuItem value="BSA">BSA</MenuItem>
-                                </Select>
-                            </FormControl>
+                            <div>
+                                <h4>
+                                    Student Registration
+                                </h4>
+                                <p>
+                                    Enter the student's information and address
+                                </p>
+                            </div>
 
 
-                            <TextField label="Email" size='small' value={email} onChange={(e) => setEmail(e.target.value)} />
-                            <TextField label="Address" size='small' value={address} onChange={(e) => setAddress(e.target.value)} />
-                            <Button variant='contained' onClick={handleAdd} className='!bg-blue-600'>{loading ? "Adding" : "Add Student"}</Button>
+                            <Form.Group>
+                                <Form.Label>First Name</Form.Label>
+                                <Form.Control value={firstname} onChange={(e) => setFirstname(e.target.value)} />
+                            </Form.Group>
 
-                            {success && <Alert severity='success'>Student Added!</Alert>}
-                            {error && <Alert severity='error'>{error}</Alert>}
-                        </CardContent>
+                            <Form.Group>
+                                <Form.Label>First Name</Form.Label>
+                                <Form.Control value={lastname} onChange={(e) => setLastname(e.target.value)} />
+                            </Form.Group>
+
+                            <Form.Group>
+                                <Form.Label>Course</Form.Label>
+                                <Form.Select value={course} onChange={(e) => setCourse(e.target.value)} >
+                                    <option value="">Select Course...</option>
+                                    <option value="BSIT">BSIT</option>
+                                    <option value="BSCS">BSCS</option>
+                                    <option value="BSIS">BSIS</option>
+                                    <option value="BSEMC">BSEMC</option>
+                                    <option value="BSA">BSA</option>
+                                </Form.Select>
+                            </Form.Group>
+
+                            <Form.Group>
+                                <Form.Label>Email</Form.Label>
+                                <Form.Control value={email} onChange={(e) => setEmail(e.target.value)} />
+                            </Form.Group>
+
+                            <Form.Group>
+                                <Form.Label>Address</Form.Label>
+                                <Form.Control value={address} onChange={(e) => setAddress(e.target.value)} />
+                            </Form.Group>
+
+                            <Button variant='primary' onClick={handleAdd} className='!bg-blue-600'>{loading ? "Adding" : "Add Student"}</Button>
+
+                            {success && <Alert variant='success'>Student Added!</Alert>}
+                            {error && <Alert variant='danger'>{error}</Alert>}
+                        </Card.Body>
                     </Card>
                 </div>
             </div>
@@ -264,12 +274,12 @@ function Registration() {
                 <div className='overflow-hidden rounded-xl border-slate-200 bg-white shadow-md'>
                     <div className='flex items-center justify-between border-b border-slate-200 bg-slate-50/60 px-6 py-4'>
                         <div>
-                            <Typography variant='h4' className='text-lg font-bold text-slate-800'>
+                            <h4 variant='h4' className='text-lg font-bold text-slate-800'>
                                 Registered Students
-                            </Typography>
-                            <Typography variant='caption' className='text-xs text-slate-500'>
+                            </h4>
+                            <p variant='caption' className='text-xs text-slate-500'>
                                 View all registered students and their locations
-                            </Typography>
+                            </p>
                         </div>
 
                         <span className='inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700'>
@@ -312,14 +322,14 @@ function Registration() {
                                         <td colSpan={columns.length} className='px-6 py-12 text-center text-slate-400'>
                                             <div className='flex flex-col items-center gap-1'>
                                                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gray-400 text-white">
-                                                    <PersonOffOutlinedIcon />
+                                                    <PersonXFill size={24} />
                                                 </div>
-                                                <Typography variant='h5' className='text-sm font-medium text-slate-500'>
+                                                <h5 className='text-sm font-medium text-slate-500'>
                                                     No Student Records
-                                                </Typography>
-                                                <Typography variant='caption' className='text-xs text-slate-400'>
+                                                </h5>
+                                                <p className='text-xs text-slate-400'>
                                                     Register a student to display records.
-                                                </Typography>
+                                                </p>
                                             </div>
                                         </td>
                                     </tr>
